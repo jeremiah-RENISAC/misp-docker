@@ -1,6 +1,9 @@
 # Use a minimal and secure official NGINX image
 FROM nginxinc/nginx-unprivileged:stable-alpine
 
+# Add bash used by entrypoint scripts
+RUN apk add --no-cache bash
+
 # Set working directory
 WORKDIR /app
 
@@ -16,7 +19,7 @@ RUN echo "Listing /app:" && ls -la /app && \
     echo "Listing /var/www/html:" && ls -la /var/www/html
 
 # Set the entrypoint
-ENTRYPOINT ["/app/entrypoint_k8s_nginx.sh"]
+ENTRYPOINT ["bash", "/app/entrypoint_k8s_nginx.sh"]
 
 # Use a non-root user (already set in nginx-unprivileged image)
 USER 101
