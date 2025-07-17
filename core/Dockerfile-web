@@ -1,6 +1,8 @@
 # Use a minimal and secure official NGINX image
 FROM nginx:stable-alpine
 
+RUN apk add --no-cache bash
+
 # Set working directory
 WORKDIR /app
 
@@ -12,4 +14,4 @@ COPY files/entrypoint_k8s_nginx.sh /app/.
 RUN mkdir -p /etc/nginx/sites-enabled
 
 # Set the entrypoint
-ENTRYPOINT ["/app/entrypoint_k8s_nginx.sh"]
+ENTRYPOINT ["bash", "/app/entrypoint_k8s_nginx.sh"]
