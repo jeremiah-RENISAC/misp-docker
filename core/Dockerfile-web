@@ -9,9 +9,10 @@ COPY --chown=101:0 --chmod=0755 files/etc/nginx/ /etc/nginx/
 COPY --chown=101:0 --chmod=0755 files/var/www/html/ /var/www/html/
 COPY --chown=101:0 --chmod=0550 files/entrypoint_nginx.sh /app/.
 COPY --chown=101:0 --chmod=0550 files/entrypoint_k8s_nginx.sh /app/.
+RUN mkdir -p /etc/nginx/sites-enabled
 
 # Set the entrypoint
 ENTRYPOINT ["/app/entrypoint_k8s_nginx.sh"]
 
-# Use a non-root user (already set in nginx-unprivileged image)
+# Use a non-root user (default set in nginx-unprivileged image)
 USER 101
