@@ -5,7 +5,6 @@ init_nginx() {
     if [ -n "$PHP_FPM_HOST" ]; then
         echo "... setting 'fastcgi_pass' to $PHP_FPM_HOST:${PHP_FPM_PORT:-9000}"
         sed -i "s@fastcgi_pass .*;@fastcgi_pass $PHP_FPM_HOST:${PHP_FPM_PORT:-9000};@" /etc/nginx/includes/misp
-    fi
     elif [ -n "$PHP_FPM_SOCK_FILE" ]; then
         echo "... setting 'fastcgi_pass' to unix:${PHP_FPM_SOCK_FILE}"
         sed -i "s@fastcgi_pass .*;@fastcgi_pass unix:${PHP_FPM_SOCK_FILE};@" /etc/nginx/includes/misp
