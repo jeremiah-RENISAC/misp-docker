@@ -1,9 +1,5 @@
 # Use a minimal and secure official NGINX image
-FROM alpine:3.19 AS builder
-RUN apk add --no-cache bash
-
 FROM nginxinc/nginx-unprivileged:stable-alpine
-COPY --from=builder /bin/bash /bin/bash
 
 # Set working directory
 WORKDIR /app
@@ -14,13 +10,8 @@ COPY --chown=101:0 --chmod=0755 files/var/www/html/ /var/www/html/
 COPY --chown=101:0 --chmod=0550 files/entrypoint_nginx.sh /app/.
 COPY --chown=101:0 --chmod=0550 files/entrypoint_k8s_nginx.sh /app/.
 
-#DEBUG
-RUN echo "Listing /app:" && ls -la /app && \
-    echo "Listing /etc/nginx:" && ls -la /etc/nginx && \
-    echo "Listing /var/www/html:" && ls -la /var/www/html
-
 # Set the entrypoint
-ENTRYPOINT ["bash", "/app/entrypoint_k8s_nginx.sh"]
+ENTRYPOINT ["/app/entrypoint_k8s_nginx.sh"]
 
 # Use a non-root user (already set in nginx-unprivileged image)
 USER 101
