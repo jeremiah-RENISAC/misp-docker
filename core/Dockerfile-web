@@ -1,8 +1,9 @@
 # Use a minimal and secure official NGINX image
-FROM nginxinc/nginx-unprivileged:stable-alpine
+FROM alpine:3.19 AS builder
+RUN apk add --no-cache bash
 
-# Add bash used by entrypoint scripts
-RUN apk update && apk add --no-cache bash
+FROM nginxinc/nginx-unprivileged:stable-alpine
+COPY --from=builder /bin/bash /bin/bash
 
 # Set working directory
 WORKDIR /app
