@@ -2,7 +2,7 @@
 FROM nginxinc/nginx-unprivileged:stable-alpine
 
 # Add bash used by entrypoint scripts
-RUN apk add --no-cache bash
+RUN apk update && apk add --no-cache bash
 
 # Set working directory
 WORKDIR /app
