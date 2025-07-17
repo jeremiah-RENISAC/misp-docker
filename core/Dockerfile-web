@@ -5,10 +5,10 @@ FROM nginx:stable-alpine
 WORKDIR /app
 
 # Copy necessary from the local 'files' directory into the container
-COPY --chown=101:0 --chmod=0755 files/etc/nginx/ /etc/nginx/
-COPY --chown=101:0 --chmod=0755 files/var/www/html/ /var/www/html/
-COPY --chown=101:0 --chmod=0550 files/entrypoint_nginx.sh /app/.
-COPY --chown=101:0 --chmod=0550 files/entrypoint_k8s_nginx.sh /app/.
+COPY files/etc/nginx/ /etc/nginx/
+COPY files/var/www/html/ /var/www/html/
+COPY files/entrypoint_nginx.sh /app/.
+COPY files/entrypoint_k8s_nginx.sh /app/.
 RUN mkdir -p /etc/nginx/sites-enabled
 
 # Set the entrypoint
