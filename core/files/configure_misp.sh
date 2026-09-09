@@ -491,11 +491,11 @@ init_user() {
     fi
     elif [ -z "$ADMIN_KEY" ] && [ "$AUTOGEN_ADMIN_KEY" == "true" ]; then
         HAS_VALID_KEY=$($MYSQL_CMD -N -s -e 'SELECT EXISTS(SELECT 1 FROM auth_keys WHERE user_id = 1 AND (expiration = 0 OR expiration > UNIX_TIMESTAMP()));')
-	if (( HAS_VALID_KEY == 0 )); then
+	    if (( HAS_VALID_KEY == 0 )); then
             echo "... regenerating admin key (set \$ADMIN_KEY if you want it to change)"
             CHANGE_CMD=(sudo -u www-data /var/www/MISP/app/Console/cake User change_authkey 1)
-	else
-	    echo "... valid admin key for admin user found, not changing"
+	    else
+	        echo "... valid admin key for admin user found, not changing"
 	fi
     else
         echo "... admin user key auto generation disabled"
